@@ -15,7 +15,7 @@ padre_de(X, Y):-
       es_hombre(Hombres), member(X, Hombres),
       padre(X, H1), member(Y, H1).
 
-padre_de(X, Y):-
+madre_de(X, Y):-
       es_mujer(Mujeres), member(X, Mujeres),
       madre(X, H1), member(Y, H1).
 
@@ -42,3 +42,13 @@ hermana_de(X, Y) :-
     es_mujer(Mujer), member(X, Mujer),
     padre_de(P, X), padre_de(P, Y),
     !.
+
+tia_de(X, Y) :-
+    es_mujer(Mujeres), member(X, Mujeres),
+    (padre_de(P, Y) ; madre_de(P, Y)),
+    hermana_de(X, P).
+
+tio_de(X, Y) :-
+    es_hombre(Hombres), member(X, Hombres),
+    (padre_de(P, Y) ; madre_de(P, Y)), 
+    hermano_de(X, P).
