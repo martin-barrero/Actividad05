@@ -43,4 +43,12 @@ hermana_de(X, Y) :-
     padre_de(P, X), padre_de(P, Y),
     !.
 
-    
+tia_de(X, Y) :-
+    es_mujer(Mujeres), member(X, Mujeres),
+    (padre_de(P, Y) ; madre_de(P, Y)),
+    hermana_de(X, P).
+
+tio_de(X, Y) :-
+    es_hombre(Hombres), member(X, Hombres),
+    (padre_de(P, Y) ; madre_de(P, Y)), 
+    hermano_de(X, P).    
