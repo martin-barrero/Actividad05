@@ -32,16 +32,12 @@ abuela_de(X, Y):-
       !.
 
 hermano_de(X, Y) :-
-    X \= Y,
     es_hombre(Hombres), member(X, Hombres),
-    padre_de(P, X), padre_de(P, Y),
-    !.
+    padre_de(P, X), padre_de(P, Y), X \= Y.
 
 hermana_de(X, Y) :-
-    X \= Y,
     es_mujer(Mujer), member(X, Mujer),
-    padre_de(P, X), padre_de(P, Y),
-    !.
+    padre_de(P, X), padre_de(P, Y), X \= Y.
 
 tia_de(X, Y) :-
     es_mujer(Mujeres), member(X, Mujeres),
@@ -52,3 +48,13 @@ tio_de(X, Y) :-
     es_hombre(Hombres), member(X, Hombres),
     (padre_de(P, Y) ; madre_de(P, Y)), 
     hermano_de(X, P).    
+
+prima_de(X, Y) :-
+    es_mujer(Mujeres), member(X, Mujeres),
+    (tio_de(Z, Y); tia_de(Z, Y)),
+    (padre_de(Z, X); madre_de(Z, X)).
+
+primo_de(X, Y) :-
+    es_hombre(Hombres), member(X, Hombres),
+    (tio_de(Z, Y); tia_de(Z, Y)),
+    (padre_de(Z, X); madre_de(Z, X)).
