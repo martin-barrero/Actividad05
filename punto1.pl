@@ -11,25 +11,22 @@ es_mujer([mona, jacqueline, marge, patty, selma, lisa, maggie, ling]).
 
 es_hombre([abraham, clancy, herbert, homero, bart]).
 
-padre_de(X, Y):-
-      es_hombre(Hombres), member(X, Hombres),
-      padre(X, H1), member(Y, H1).
+padre_de(X, Y) :-
+    es_hombre(Hombres), member(X, Hombres),
+    padre(X, H1), member(Y, H1).
 
-madre_de(X, Y):-
-      es_mujer(Mujeres), member(X, Mujeres),
-      madre(X, H1), member(Y, H1).
+madre_de(X, Y) :-
+    es_mujer(Mujeres), member(X, Mujeres),
+    madre(X, H1), member(Y, H1).
 
 abuelo_de(X, Y) :-
     es_hombre(Hombres), member(X, Hombres),
-    padre_de(X, Z),
-    padre_de(Z, Y),
-    !. 
+    padre_de(X, Z), (padre_de(Z, Y); madre_de(Z, Y)).
 
-abuela_de(X, Y):-
-      es_mujer(Mujeres), member(X, Mujeres),
-      padre_de(X, Z),
-      padre_de(Z, Y),
-      !.
+abuela_de(X, Y) :-
+    es_mujer(Mujeres), member(X, Mujeres),
+    madre_de(X, Z), (padre_de(Z, Y); madre_de(Z, Y)).
+
 
 hermano_de(X, Y) :-
     es_hombre(Hombres), member(X, Hombres),
